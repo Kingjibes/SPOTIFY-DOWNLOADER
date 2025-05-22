@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: instagram-downloader
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    env: node
+    envVars:
+      - key: PORT
+        value: 3000
+    healthCheckPath: /
