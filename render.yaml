@@ -1,11 +1,10 @@
 services:
   - type: web
-    name: instagram-downloader
-    runtime: node
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    name: spotify-downloader-app
     env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
     envVars:
       - key: PORT
-        value: 3000
-    healthCheckPath: /
+        value: 10000  # Render requires ports between 10000 and 60000
+    plan: free
