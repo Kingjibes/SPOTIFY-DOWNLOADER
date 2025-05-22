@@ -1,0 +1,16 @@
+
+# Apache Server Configuration for React Router
+# This ensures that all navigation is handled by index.html for client-side routing.
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # Don't rewrite files or directories
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+  
+  # Rewrite everything else to index.html to allow React Router to handle the BROWSER history stack
+  RewriteRule ^ index.html [L]
+</IfModule>
+  
