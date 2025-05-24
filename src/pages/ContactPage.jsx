@@ -74,8 +74,8 @@ const ContactPage = () => {
             <label htmlFor="name" className="block text-sm font-medium text-spotify-green/80 mb-1">
               Full Name
             </label>
-            <div className="relative">
-              <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-spotify-green" />
+            <div className="relative flex items-center">
+              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-spotify-green pointer-events-none" />
               <Input
                 id="name"
                 type="text"
@@ -83,7 +83,7 @@ const ContactPage = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="pl-12 text-lg p-3 bg-spotify-black/80 border-spotify-green/50 focus:ring-spotify-green focus:border-spotify-green text-spotify-light-gray placeholder-spotify-light-gray/70"
+                className="w-full pl-10 pr-3 text-lg py-3 bg-spotify-black/80 border-spotify-green/50 focus:ring-spotify-green focus:border-spotify-green text-spotify-light-gray placeholder-spotify-light-gray/70"
               />
             </div>
           </div>
@@ -92,8 +92,8 @@ const ContactPage = () => {
             <label htmlFor="email" className="block text-sm font-medium text-spotify-green/80 mb-1">
               Email Address
             </label>
-            <div className="relative">
-              <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-spotify-green" />
+            <div className="relative flex items-center">
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-spotify-green pointer-events-none" />
               <Input
                 id="email"
                 type="email"
@@ -101,7 +101,7 @@ const ContactPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="pl-12 text-lg p-3 bg-spotify-black/80 border-spotify-green/50 focus:ring-spotify-green focus:border-spotify-green text-spotify-light-gray placeholder-spotify-light-gray/70"
+                className="w-full pl-10 pr-3 text-lg py-3 bg-spotify-black/80 border-spotify-green/50 focus:ring-spotify-green focus:border-spotify-green text-spotify-light-gray placeholder-spotify-light-gray/70"
               />
             </div>
           </div>
@@ -110,8 +110,8 @@ const ContactPage = () => {
             <label htmlFor="message" className="block text-sm font-medium text-spotify-green/80 mb-1">
               Message
             </label>
-            <div className="relative">
-               <MessageSquare className="absolute left-4 top-[1.125rem] w-5 h-5 text-spotify-green" />
+            <div className="relative flex items-start">
+               <MessageSquare className="absolute left-3 top-3.5 w-5 h-5 text-spotify-green pointer-events-none" />
               <Textarea
                 id="message"
                 placeholder="Your feedback or question..."
@@ -119,7 +119,7 @@ const ContactPage = () => {
                 onChange={(e) => setMessage(e.target.value)}
                 required
                 rows={5}
-                className="pl-12 text-lg p-3 bg-spotify-black/80 border-spotify-green/50 focus:ring-spotify-green focus:border-spotify-green text-spotify-light-gray placeholder-spotify-light-gray/70"
+                className="w-full pl-10 pr-3 text-lg py-3 bg-spotify-black/80 border-spotify-green/50 focus:ring-spotify-green focus:border-spotify-green text-spotify-light-gray placeholder-spotify-light-gray/70"
               />
             </div>
           </div>
