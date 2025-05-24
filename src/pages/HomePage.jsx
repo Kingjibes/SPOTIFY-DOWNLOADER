@@ -19,7 +19,7 @@ const HomePage = () => {
   const appDownloadSectionRef = useRef(null);
 
   const API_BASE_URL = 'https://apis.davidcyriltech.my.id/spotifydl?url=';
-  const APP_DOWNLOAD_URL = 'https://www.mediafire.com/file/c258ri21spt535j/Spotify+downloader.apk/file';
+  const APP_DOWNLOAD_URL = 'https://www.mediafire.com/file/fwcov67xw87a7lc/Spotify+downloader.apk/file';
 
   const isValidSpotifyUrl = (url) => {
     try {
