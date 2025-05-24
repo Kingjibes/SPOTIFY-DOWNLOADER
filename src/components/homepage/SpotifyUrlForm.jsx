@@ -7,7 +7,8 @@ const SpotifyUrlForm = ({ spotifyUrl, setSpotifyUrl, handleSubmit, handlePaste, 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <div className="relative">
+        <div className="relative flex items-center">
+          <LinkIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-spotify-green pointer-events-none" />
           <Input
             id="spotifyUrl"
             type="url"
@@ -15,9 +16,8 @@ const SpotifyUrlForm = ({ spotifyUrl, setSpotifyUrl, handleSubmit, handlePaste, 
             value={spotifyUrl}
             onChange={(e) => setSpotifyUrl(e.target.value)}
             onFocus={handleFocus} 
-            className="text-lg p-4 pl-12 bg-spotify-black/80 border-spotify-green/50 focus:ring-spotify-green focus:border-spotify-green text-spotify-light-gray placeholder-spotify-light-gray/70"
+            className="w-full text-lg p-4 pl-10 pr-12 bg-spotify-black/80 border-spotify-green/50 focus:ring-spotify-green focus:border-spotify-green text-spotify-light-gray placeholder-spotify-light-gray/70"
           />
-          <LinkIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-spotify-green" />
           <Button 
             type="button" 
             variant="ghost" 
