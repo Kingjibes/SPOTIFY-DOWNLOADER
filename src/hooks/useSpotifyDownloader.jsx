@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { CheckCircle } from 'lucide-react';
 
-const API_BASE_URL = 'https://apis.davidcyriltech.my.id/spotifydl?url=';
+const API_BASE_URL = 'https://api-aswin-sparky.koyeb.app/api/downloader/spotify?url=';
 
 const cleanSpotifyUrl = (url) => {
   try {
@@ -56,20 +56,13 @@ export const useSpotifyDownloader = (updateDownloadHistoryCallback) => {
       
       let responseData;
       try {
-        const textResponse = await response.text();
-        try {
-            responseData = JSON.parse(textResponse);
-        } catch (jsonError) {
-            console.error("API returned non-JSON:", response.status, textResponse);
-            throw new Error(`The API returned an unexpected response (Status: ${response.status}). This could be a temporary issue with the service. Raw response: ${textResponse.substring(0,100)}...`);
-        }
-      } catch (textError) {
-        console.error("Failed to get text from API response:", textError);
-        throw new Error(`Failed to read response from the API (Status: ${response.status}). Please try again later.`);
+        responseData = await response.json();
+      } catch (jsonError) {
+        console.error("API returned non-JSON:", response.status, response);
+        throw new Error(`The API returned an unexpected response (Status: ${response.status}).`);
       }
 
-
-      if (!response.ok) {
+      if (!response.ok || !responseData.status) {
         let apiMessage = responseData?.message || `Failed to fetch song data. API Status: ${response.status}`;
         if (response.status === 404) {
           apiMessage = "The song could not be found by the download service. Please check the link or try a different song.";
@@ -79,36 +72,37 @@ export const useSpotifyDownloader = (updateDownloadHistoryCallback) => {
         throw new Error(apiMessage);
       }
       
-      if (responseData.success && responseData.title && responseData.DownloadLink) {
-        setSongData(responseData);
+      if (responseData.status && responseData.data) {
+        const formattedData = {
+          success: true,
+          title: responseData.data.title,
+          artist: responseData.data.artis, // Note: Typo in API response ("artis" instead of "artist")
+          duration: responseData.data.durasi,
+          image: responseData.data.image,
+          downloadLink: responseData.data.download,
+          type: responseData.data.type,
+          status: responseData.data.status
+        };
+        
+        setSongData(formattedData);
         if (updateDownloadHistoryCallback) {
-          updateDownloadHistoryCallback(responseData, urlToFetch);
+          updateDownloadHistoryCallback(formattedData, urlToFetch);
         }
         toast({ 
           title: 'Song Found!', 
-          description: responseData.title,
+          description: `${formattedData.title} by ${formattedData.artist}`,
           action: <CheckCircle className="text-spotify-green" />
         });
       } else {
-        // This case handles when API returns success:false or missing crucial data
-        let detailedError = "Could not retrieve song information from the service.";
-        if (responseData.message) {
-            detailedError = `Service error: ${responseData.message}`;
-        } else if (response.status === 200 && !responseData.DownloadLink) {
-            detailedError = "The service found the song but could not provide a download link. This song might not be downloadable.";
-        }
-        throw new Error(detailedError);
+        throw new Error(responseData.message || "Could not retrieve song information from the service.");
       }
     } catch (err) {
       console.error("API Error:", err);
       let errorMessage = err.message || 'An unexpected error occurred while fetching song data.';
-      // Consolidate common error checks here
       if (errorMessage.toLowerCase().includes("not found")) {
         errorMessage = "Song not found by the service or link is invalid. Please double-check the Spotify URL.";
       } else if (errorMessage.includes("Status: 5") || errorMessage.toLowerCase().includes("service is temporarily unavailable")) { 
         errorMessage = "The download service is temporarily unavailable or experiencing issues. Please try again later.";
-      } else if (errorMessage.toLowerCase().includes("unexpected response") || errorMessage.toLowerCase().includes("failed to read response")) {
-        // Keep the detailed message from the try/catch around response.json()
       }
       setError(errorMessage);
       toast({ variant: 'destructive', title: 'Fetch Error', description: errorMessage });
