@@ -1,5 +1,11 @@
 import { useState } from 'react';
 
+// Export the URL validation function
+export const isValidSpotifyTrackUrl = (url) => {
+  const spotifyPattern = /^(https?:\/\/)?(www\.)?open\.spotify\.com\/track\/[a-zA-Z0-9]+(\?.*)?$/;
+  return spotifyPattern.test(url);
+};
+
 export const useSpotifyDownloader = (updateDownloadHistory) => {
   const [songData, setSongData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -11,8 +17,7 @@ export const useSpotifyDownloader = (updateDownloadHistory) => {
     setSongData(null);
 
     try {
-      // Validate Spotify URL format
-      if (!isValidSpotifyUrl(spotifyUrl)) {
+      if (!isValidSpotifyTrackUrl(spotifyUrl)) {
         throw new Error('Invalid Spotify URL. Please use format: https://open.spotify.com/track/...');
       }
 
@@ -33,7 +38,7 @@ export const useSpotifyDownloader = (updateDownloadHistory) => {
         imageUrl: data.results.image,
         downloadUrl: data.results.downloadMP3,
         type: data.results.type,
-        artist: data.results.artist || 'Unknown Artist' // Adding fallback for artist
+        artist: data.results.artist || 'Unknown Artist'
       };
 
       setSongData(formattedData);
@@ -43,11 +48,6 @@ export const useSpotifyDownloader = (updateDownloadHistory) => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const isValidSpotifyUrl = (url) => {
-    const spotifyPattern = /^(https?:\/\/)?(www\.)?open\.spotify\.com\/track\/[a-zA-Z0-9]+(\?.*)?$/;
-    return spotifyPattern.test(url);
   };
 
   return { songData, isLoading, error, fetchSongData, setError };
