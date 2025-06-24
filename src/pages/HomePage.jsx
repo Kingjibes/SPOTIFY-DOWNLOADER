@@ -15,7 +15,6 @@ import { useSpotifyDownloader } from '@/hooks/useSpotifyDownloader';
 import { useDownloadHistory } from '@/hooks/useDownloadHistory';
 import { useClipboardHandler } from '@/hooks/useClipboardHandler';
 
-
 const HomePage = () => {
   const [spotifyUrl, setSpotifyUrl] = useState('');
   const { toast } = useToast();
@@ -52,7 +51,7 @@ const HomePage = () => {
 
   return (
     <motion.div 
-      className="container mx-auto px-4 py-8 flex flex-col items-center min-h-[calc(100vh-160px)] " 
+      className="container mx-auto px-4 py-8 flex flex-col items-center min-h-[calc(100vh-160px)]" 
       initial="hidden"
       animate="visible"
       variants={{ visible: { transition: { staggerChildren: 0.1 }}}}
@@ -93,7 +92,7 @@ const HomePage = () => {
               handleSubmit={handleSubmit}
               handlePaste={handlePasteFromManualButton}
               isLoading={isLoading}
-              handleFocus={checkClipboardOnFocus} // Passed from useClipboardHandler hook
+              handleFocus={checkClipboardOnFocus}
             />
           </CardContent>
         </Card>
@@ -118,7 +117,6 @@ const HomePage = () => {
       />
       
       <AppDownloadSection ref={appDownloadSectionRef} />
-
     </motion.div>
   );
 };
